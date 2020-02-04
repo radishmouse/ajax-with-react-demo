@@ -2,5 +2,5 @@
 
 This demo will use:
 
-- The Star Wars API
+- The Star Wars API: https://swapi.co/documentation
 - Axios
