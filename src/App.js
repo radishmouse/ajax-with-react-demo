@@ -24,7 +24,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       name: '',
-      currentId: 2
+      currentId: 15
     }
   }
 
@@ -35,14 +35,7 @@ class App extends React.Component {
     // This is the first React method where it is safe
     // to call this.setState
     // let name = 'not their real name';
-    axios.get(urlForId(this.state.currentId))
-      .then(response => {
-          console.log(response.data.name);
-          // name = response.data.name;
-          this.setState({
-            name: response.data.name
-          })
-      })
+    this._makeAjaxRequest();
   }
 
   render() {
@@ -52,10 +45,35 @@ class App extends React.Component {
           {
             this.state.name || <img src={logo} />
           }
+          <button onClick={this._getNextCharacter}>💥💥💥</button>
         </header>
       </div>
     );
   }
+
+  _getNextCharacter = () => {
+    this.setState({
+      currentId: this.state.currentId + 1
+    }, () => {
+      console.log(`New currentId is ${this.state.currentId}`);
+      this._makeAjaxRequest();
+    });
+  }
+
+  _makeAjaxRequest = () => {
+    axios.get(urlForId(this.state.currentId))
+      .then(response => {
+          console.log(response.data.name);
+          // name = response.data.name;
+          this.setState({
+            name: response.data.name
+          })
+      })
+      .catch(err => {
+          this._getNextCharacter();
+      })    
+  }
+
 }
 
 
