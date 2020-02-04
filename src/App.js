@@ -10,19 +10,21 @@ XML
 */
 import axios from 'axios';
 const API_ENDPOINT = 'https://swapi.co/api/people/1/';
-
-
 // fetch(API_ENDPOINT)
 //     .then(r => r.json())
 //     .then(data => {
 //         console.log(data);
 //     })
 
+function urlForId(id) {
+  return `https://swapi.co/api/people/${id}/`;
+}
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: 'not their real name at all'
+      name: '',
+      currentId: 2
     }
   }
 
@@ -33,7 +35,7 @@ class App extends React.Component {
     // This is the first React method where it is safe
     // to call this.setState
     // let name = 'not their real name';
-    axios.get(API_ENDPOINT)
+    axios.get(urlForId(this.state.currentId))
       .then(response => {
           console.log(response.data.name);
           // name = response.data.name;
@@ -41,14 +43,15 @@ class App extends React.Component {
             name: response.data.name
           })
       })
-      
   }
 
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          {this.state.name}
+          {
+            this.state.name || <img src={logo} />
+          }
         </header>
       </div>
     );
