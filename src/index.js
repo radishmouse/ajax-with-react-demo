@@ -17,6 +17,11 @@ axios.get(API_ENDPOINT)
         console.log(response);
     })
 
+// fetch(API_ENDPOINT)
+//     .then(r => r.json())
+//     .then(data => {
+//         console.log(data);
+//     })
 
 
 ReactDOM.render(<App />, document.getElementById('root'));
